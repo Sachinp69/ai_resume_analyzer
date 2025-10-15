@@ -27,17 +27,6 @@ const Upload = () => {
     const imageFile = await convertPdfToImage(file);
     if(!imageFile.file) return setStatusText('Error : failed to convert pdf to image :(');
 
-    // try {
-    //   setStatusText('converting to image');
-    //   let imageFile = await convertPdfToImage(file);
-    //   if(!imageFile.file) {
-    //     return setStatusText('Error: failed to convert pdf to image :(');
-    //   }
-    // } catch (error) {
-    //   console.error('PDF conversion error:', error);
-    //   setStatusText('Error during conversion');
-    // }
-
     setStatusText('uploading image...');
     const uploadedImage = await fs.upload([imageFile.file]);
     if(!uploadedImage) return setStatusText('Error : failed to upload image :(');
@@ -71,6 +60,7 @@ const Upload = () => {
     await kv.set(`resume-${uuid}`, JSON.stringify(data));
     setStatusText('All done! Redirecting you ...');
     console.log(data)
+    navigate(`/resume/${uuid}`);
 
   }
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
