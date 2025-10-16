@@ -8,7 +8,7 @@ import { usePuterStore } from '~/lib/puter';
 import { generateUUID } from '~/lib/utils';
 
 const Upload = () => {
-  const { auth, isLoading, fs, ai, kv } = usePuterStore();
+  const { fs, ai, kv } = usePuterStore();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState('Processing your resume...');
@@ -23,7 +23,7 @@ const Upload = () => {
     const uploadedFile = await fs.upload([file]);
     if(!uploadedFile) return setStatusText('Error : failed to upload file :(');
 
-    setStatusText('converting to image');
+    setStatusText('converting to image...');
     const imageFile = await convertPdfToImage(file);
     if(!imageFile.file) return setStatusText('Error : failed to convert pdf to image :(');
 
@@ -31,7 +31,7 @@ const Upload = () => {
     const uploadedImage = await fs.upload([imageFile.file]);
     if(!uploadedImage) return setStatusText('Error : failed to upload image :(');
 
-    setStatusText('preparing data ;)');
+    setStatusText('preparing data... ;)');
     const uuid = generateUUID();
     const data = {
       id : uuid,
